@@ -96,11 +96,6 @@ func RailFenceDecrypt(text string, rails int) string {
 
 // --------------------- 5. XOR Cipher ---------------------
 func XORDecrypt(data []byte, key byte) []byte {
-	// XOR decryption = encryption
-	return XOREncrypt(data, key)
-}
-
-func XOREncrypt(data []byte, key byte) []byte {
 	result := make([]byte, len(data))
 	for i := 0; i < len(data); i++ {
 		result[i] = data[i] ^ key
