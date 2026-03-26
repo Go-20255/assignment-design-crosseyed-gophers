@@ -34,3 +34,10 @@ For a sanity check, use the built-in solver: `tools/puzzle-solve/main.go`.  This
 If all tests pass on student code, it means all ciphers have been properly implemented. 
 
 Additionally, check the registry to make sure all ciphers have been registered.  You can also give different messages to different students, and automate generating `start.json`. 
+
+
+### Additional Instructor Note:
+
+Due to this being a basic CLI, we did not include a `Makefile` or run script.
+
+Students can complete this assignment using the CLI `go run main.go`, and the provided test suite.

@@ -28,4 +28,4 @@ Cipher unit tests are provided in `cipher/*_test.go`. They will **fail** until y
 
 ```bash
 go test ./...
-``` 
+```
