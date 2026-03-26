@@ -41,3 +41,5 @@ Additionally, check the registry to make sure all ciphers have been registered. 
 Due to this being a basic CLI, we did not include a `Makefile` or run script.
 
 Students can complete this assignment using the CLI `go run main.go`, and the provided test suite.
+
+The `dist/` directory contains a student-ready version of this assignment with stubbed implementations.
