@@ -36,8 +36,6 @@ type ParamSpec struct {
 	Help     string
 }
 
-// (No separate Definition type: the cipher itself owns schema + parsing.)
-
 // Random is the minimal RNG surface ciphers need for RandomParams.
 // It is satisfied by math/rand/v2.Rand.
 type Random interface {

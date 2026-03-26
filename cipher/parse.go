@@ -14,14 +14,6 @@ func getRequired(params map[string]string, name string) (string, error) {
 	return v, nil
 }
 
-func getOptional(params map[string]string, name string) (string, bool) {
-	v, ok := params[name]
-	if !ok {
-		return "", false
-	}
-	return v, true
-}
-
 func parseIntParam(raw string) (int, error) {
 	n, err := strconv.Atoi(strings.TrimSpace(raw))
 	if err != nil {

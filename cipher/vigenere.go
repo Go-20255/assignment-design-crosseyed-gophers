@@ -27,11 +27,10 @@ VigenereCipher (technical specification)
 
 - **Decrypt**: inverse shift (shift backward by `shift` modulo 26)
 
-Note: This spec intentionally matches our implementation (it does not validate that the key
-contains only letters; non-letter bytes will produce undefined/odd shifts).
+Note: This spec intentionally matches our implementation (we only validate non-empty;
+we do not require the key to be letters).
 */
-type VigenereCipher struct {
-}
+type VigenereCipher struct{}
 
 func (VigenereCipher) Name() string { return "vigenere" }
 
@@ -68,75 +67,19 @@ func (VigenereCipher) RandomParams(rng Random) ParsedParams {
 }
 
 func (VigenereCipher) Encrypt(input []byte, params ParsedParams) ([]byte, error) {
-	p, ok := params.(vigenereParams)
-	if !ok {
+	if _, ok := params.(vigenereParams); !ok {
 		return nil, fmt.Errorf("vigenere: wrong params type")
 	}
-	return []byte(vigenereEncrypt(string(input), p.key)), nil
+	// STUDENT TODO: implement Vigenère encryption (see spec above).
+	_ = input
+	return nil, ErrNotImplemented
 }
 
 func (VigenereCipher) Decrypt(input []byte, params ParsedParams) ([]byte, error) {
-	p, ok := params.(vigenereParams)
-	if !ok {
+	if _, ok := params.(vigenereParams); !ok {
 		return nil, fmt.Errorf("vigenere: wrong params type")
 	}
-	return []byte(vigenereDecrypt(string(input), p.key)), nil
-}
-
-func vigenereEncrypt(text, key string) string {
-	result := ""
-	keyLen := len(key)
-	keyIndex := 0
-
-	for _, ch := range text {
-		if (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') {
-			k := rune(key[keyIndex%keyLen])
-			if k >= 'a' && k <= 'z' {
-				k -= 'a'
-			} else {
-				k -= 'A'
-			}
-
-			var base rune
-			if ch >= 'a' && ch <= 'z' {
-				base = 'a'
-			} else {
-				base = 'A'
-			}
-			result += string((ch-base+k)%26 + base)
-			keyIndex++
-		} else {
-			result += string(ch)
-		}
-	}
-	return result
-}
-
-func vigenereDecrypt(text, key string) string {
-	result := ""
-	keyLen := len(key)
-	keyIndex := 0
-
-	for _, ch := range text {
-		if (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') {
-			k := rune(key[keyIndex%keyLen])
-			if k >= 'a' && k <= 'z' {
-				k -= 'a'
-			} else {
-				k -= 'A'
-			}
-
-			var base rune
-			if ch >= 'a' && ch <= 'z' {
-				base = 'a'
-			} else {
-				base = 'A'
-			}
-			result += string((ch-base-k+26)%26 + base)
-			keyIndex++
-		} else {
-			result += string(ch)
-		}
-	}
-	return result
+	// STUDENT TODO: implement Vigenère decryption.
+	_ = input
+	return nil, ErrNotImplemented
 }

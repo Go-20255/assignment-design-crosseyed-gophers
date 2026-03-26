@@ -19,8 +19,7 @@ RailFenceCipher (technical specification)
   - Reconstruct the same zig-zag path indices for length N, split ciphertext into rows
     using per-row counts, then read off runes following the zig-zag path.
 */
-type RailFenceCipher struct {
-}
+type RailFenceCipher struct{}
 
 func (RailFenceCipher) Name() string { return "railfence" }
 
@@ -59,88 +58,19 @@ func (RailFenceCipher) RandomParams(rng Random) ParsedParams {
 }
 
 func (RailFenceCipher) Encrypt(input []byte, params ParsedParams) ([]byte, error) {
-	p, ok := params.(railFenceParams)
-	if !ok {
+	if _, ok := params.(railFenceParams); !ok {
 		return nil, fmt.Errorf("railfence: wrong params type")
 	}
-	return []byte(railFenceEncrypt(string(input), p.rails)), nil
+	// STUDENT TODO: implement Rail Fence encryption (see spec above).
+	_ = input
+	return nil, ErrNotImplemented
 }
 
 func (RailFenceCipher) Decrypt(input []byte, params ParsedParams) ([]byte, error) {
-	p, ok := params.(railFenceParams)
-	if !ok {
+	if _, ok := params.(railFenceParams); !ok {
 		return nil, fmt.Errorf("railfence: wrong params type")
 	}
-	return []byte(railFenceDecrypt(string(input), p.rails)), nil
-}
-
-func railFenceEncrypt(text string, rails int) string {
-	if rails <= 1 {
-		return text
-	}
-
-	rows := make([][]rune, rails)
-	dir := 1
-	row := 0
-	for _, ch := range text {
-		rows[row] = append(rows[row], ch)
-		row += dir
-		if row == 0 || row == rails-1 {
-			dir *= -1
-		}
-	}
-
-	result := ""
-	for _, r := range rows {
-		result += string(r)
-	}
-	return result
-}
-
-func railFenceDecrypt(text string, rails int) string {
-	if rails <= 1 {
-		return text
-	}
-
-	runes := []rune(text)
-	n := len(runes)
-	rowsIdx := make([]int, n)
-
-	dir := 1
-	row := 0
-	for i := 0; i < n; i++ {
-		rowsIdx[i] = row
-		row += dir
-		if row == 0 || row == rails-1 {
-			dir *= -1
-		}
-	}
-
-	count := make([]int, rails)
-	for _, r := range rowsIdx {
-		count[r]++
-	}
-
-	resultRows := make([][]rune, rails)
-	idx := 0
-	for r := 0; r < rails; r++ {
-		resultRows[r] = append([]rune(nil), runes[idx:idx+count[r]]...)
-		idx += count[r]
-	}
-
-	pos := make([]int, rails)
-	dir = 1
-	row = 0
-	out := make([]rune, n)
-	for i := 0; i < n; i++ {
-		out[i] = resultRows[row][pos[row]]
-		pos[row]++
-
-		row += dir
-		if row == 0 || row == rails-1 {
-			dir *= -1
-		}
-	}
-
-	return string(out)
+	// STUDENT TODO: implement Rail Fence decryption.
+	_ = input
+	return nil, ErrNotImplemented
 }

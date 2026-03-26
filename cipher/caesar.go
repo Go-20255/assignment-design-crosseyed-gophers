@@ -17,8 +17,7 @@ CaesarCipher (technical specification)
 
 - **Decrypt**: inverse shift (shift backward by `shift` modulo 26)
 */
-type CaesarCipher struct {
-}
+type CaesarCipher struct{}
 
 func (CaesarCipher) Name() string { return "caesar" }
 
@@ -57,45 +56,25 @@ func (CaesarCipher) RandomParams(rng Random) ParsedParams {
 }
 
 func (CaesarCipher) Encrypt(input []byte, params ParsedParams) ([]byte, error) {
-	p, ok := params.(caesarParams)
+	_, ok := params.(caesarParams)
 	if !ok {
 		return nil, fmt.Errorf("caesar: wrong params type")
 	}
-	return []byte(caesarEncrypt(string(input), p.shift)), nil
+	// STUDENT TODO: implement Caesar encryption.
+	// Hints:
+	// - Only shift ASCII letters A-Z and a-z
+	// - Wrap within the alphabet (mod 26)
+	// - Leave all other bytes unchanged
+	_ = input
+	return nil, ErrNotImplemented
 }
 
 func (CaesarCipher) Decrypt(input []byte, params ParsedParams) ([]byte, error) {
-	p, ok := params.(caesarParams)
+	_, ok := params.(caesarParams)
 	if !ok {
 		return nil, fmt.Errorf("caesar: wrong params type")
 	}
-	return []byte(caesarDecrypt(string(input), p.shift)), nil
-}
-
-func caesarEncrypt(text string, shift int) string {
-	result := ""
-	for _, ch := range text {
-		if ch >= 'a' && ch <= 'z' {
-			result += string((ch-'a'+rune(shift))%26 + 'a')
-		} else if ch >= 'A' && ch <= 'Z' {
-			result += string((ch-'A'+rune(shift))%26 + 'A')
-		} else {
-			result += string(ch)
-		}
-	}
-	return result
-}
-
-func caesarDecrypt(text string, shift int) string {
-	result := ""
-	for _, ch := range text {
-		if ch >= 'a' && ch <= 'z' {
-			result += string((ch-'a'-rune(shift)+26)%26 + 'a')
-		} else if ch >= 'A' && ch <= 'Z' {
-			result += string((ch-'A'-rune(shift)+26)%26 + 'A')
-		} else {
-			result += string(ch)
-		}
-	}
-	return result
+	// STUDENT TODO: implement Caesar decryption (inverse of Encrypt).
+	_ = input
+	return nil, ErrNotImplemented
 }

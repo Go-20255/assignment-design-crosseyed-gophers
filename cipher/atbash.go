@@ -32,23 +32,14 @@ func (AtbashCipher) ParseParams(_ map[string]string) (ParsedParams, error) {
 func (AtbashCipher) RandomParams(_ Random) ParsedParams { return atbashParams{} }
 
 func (AtbashCipher) Encrypt(input []byte, _ ParsedParams) ([]byte, error) {
-	return []byte(atbashEncrypt(string(input))), nil
+	// STUDENT TODO: implement Atbash encryption (see spec above).
+	_ = input
+	return nil, ErrNotImplemented
 }
 
 func (AtbashCipher) Decrypt(input []byte, _ ParsedParams) ([]byte, error) {
-	return []byte(atbashEncrypt(string(input))), nil
-}
-
-func atbashEncrypt(text string) string {
-	result := ""
-	for _, ch := range text {
-		if ch >= 'a' && ch <= 'z' {
-			result += string('z' - (ch - 'a'))
-		} else if ch >= 'A' && ch <= 'Z' {
-			result += string('Z' - (ch - 'A'))
-		} else {
-			result += string(ch)
-		}
-	}
-	return result
+	// STUDENT TODO: implement Atbash decryption.
+	// NOTE: Atbash is symmetric, so this can call Encrypt.
+	_ = input
+	return nil, ErrNotImplemented
 }

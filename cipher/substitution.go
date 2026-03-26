@@ -17,10 +17,6 @@ SubstitutionCipher (technical specification)
 
 - **Decrypt**:
   - same rule using the inverse mapping induced by `key`
-
-Example key (classic “qwerty” mapping, used in our tests):
-
-	`qwertyuiopasdfghjklzxcvbnm`
 */
 type SubstitutionCipher struct{}
 
@@ -72,19 +68,21 @@ func (SubstitutionCipher) RandomParams(rng Random) ParsedParams {
 }
 
 func (SubstitutionCipher) Encrypt(input []byte, params ParsedParams) ([]byte, error) {
-	p, ok := params.(substitutionParams)
-	if !ok {
+	if _, ok := params.(substitutionParams); !ok {
 		return nil, fmt.Errorf("substitution: wrong params type")
 	}
-	return []byte(substitutionEncrypt(string(input), p.enc)), nil
+	// STUDENT TODO: implement substitution encryption (see spec above).
+	_ = input
+	return nil, ErrNotImplemented
 }
 
 func (SubstitutionCipher) Decrypt(input []byte, params ParsedParams) ([]byte, error) {
-	p, ok := params.(substitutionParams)
-	if !ok {
+	if _, ok := params.(substitutionParams); !ok {
 		return nil, fmt.Errorf("substitution: wrong params type")
 	}
-	return []byte(substitutionDecrypt(string(input), p.dec)), nil
+	// STUDENT TODO: implement substitution decryption.
+	_ = input
+	return nil, ErrNotImplemented
 }
 
 func parseSubstitutionKey(key string) (substitutionParams, error) {
@@ -111,28 +109,4 @@ func parseSubstitutionKey(key string) (substitutionParams, error) {
 	}
 
 	return substitutionParams{key: key, enc: enc, dec: dec}, nil
-}
-
-func substitutionEncrypt(text string, enc [26]rune) string {
-	result := ""
-	for _, ch := range text {
-		if ch >= 'a' && ch <= 'z' {
-			result += string(enc[ch-'a'])
-		} else {
-			result += string(ch)
-		}
-	}
-	return result
-}
-
-func substitutionDecrypt(text string, dec [26]rune) string {
-	result := ""
-	for _, ch := range text {
-		if ch >= 'a' && ch <= 'z' {
-			result += string(dec[ch-'a'])
-		} else {
-			result += string(ch)
-		}
-	}
-	return result
 }
